@@ -1,4 +1,3 @@
-```markdown
 # 🧠 Full Stack Open – Parte 1: React con Vite en Docker
 
 Este entorno Docker está diseñado para desarrollar los ejercicios de la [**Parte 1 del curso Full Stack Open**](https://fullstackopen.com/es/), utilizando **React** con **Vite** sin necesidad de instalar Node.js en tu sistema.
