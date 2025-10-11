@@ -67,7 +67,6 @@ EXPOSE 5173
 services:
   react:
     build: .
-    container_name: react-vite
     ports:
       - "5173:5173"
     volumes:
