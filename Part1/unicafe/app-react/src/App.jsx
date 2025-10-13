@@ -4,33 +4,25 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button =({handleClick, text}) => <button onClick={handleClick}>{text}</button> 
 
-const Display = ({text, value}) => <div>{text} {value}</div>
+const StatisticLine = ({text, value}) => <div>{text} {value}</div>
+
 
 const Statistics = ({good, neutral, bad}) => {
   let total = good+neutral+bad
   let average = (good-bad)/total
   let positive = (good/total)*100
-  return(
-    <div>
-      <div>average {average}</div>
-      <div>positive {positive} %</div>
-    </div>
-  )
-}
-
-const AllDisplay = ({good, neutral, bad}) => {
-  let total = good+neutral+bad
   if (total == 0) return <div>No feedback given</div>
   else return(
     <div>
-      <Display text={"good"} value={good}/>
-      <Display text={"neutral"} value={neutral}/>
-      <Display text={"bad"} value={bad}/>
-      <Display text={"all"} value={total}/>
-      <Statistics good={good} neutral={neutral} bad={bad}/>
+      <StatisticLine text={"good"} value={good}/>
+      <StatisticLine text={"neutral"} value={neutral}/>
+      <StatisticLine text={"bad"} value={bad}/>
+      <StatisticLine text={"all"} value={total}/>
+      <StatisticLine text={"average"} value={average}/>
+      <StatisticLine text={"positive"} value={positive + " %"}/>
     </div>
   )
-  }
+}
 
 const App = () => {
   // guarda los clics de cada botón en su propio estado
@@ -47,7 +39,7 @@ const App = () => {
       <Button handleClick={() => incrementState(neutral,setNeutral)} text={"neutral"}/>
       <Button handleClick={() => incrementState(bad,setBad)} text={"bad"}/>
       <Title text={"statistics"}/>
-      <AllDisplay good={good} neutral={neutral} bad={bad}/>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
