@@ -8,16 +8,16 @@ const Display = ({text, value}) => <div>{text} {value}</div>
 
 const Statistics = ({good, neutral, bad}) => {
   let total = good+neutral+bad
-  if (total == 0) return (
+  let average = (good-bad)/total
+  let positive = (good/total)*100
+  if (total == 0){
+    average = 0
+    positive = 0
+  }
+  return(
     <div>
-      <div>average {0}</div>
-      <div>positive {0} %</div>
-    </div>
-  )
-  else return(
-    <div>
-      <div>average {(good-bad)/total}</div>
-      <div>positive {good/total*100} %</div>
+      <div>average {average}</div>
+      <div>positive {positive} %</div>
     </div>
   )
 }
