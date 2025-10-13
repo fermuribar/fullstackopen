@@ -4,10 +4,22 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button =({handleClick, text}) => <button onClick={handleClick}>{text}</button> 
 
-const Display = ({text, value}) => {
-  if (isNaN(value)) value = 0
-  if (text == "positive") return <div>{text} {value} %</div>
-  else return <div>{text} {value}</div>
+const Display = ({text, value}) => <div>{text} {value}</div>
+
+const Statistics = ({good, neutral, bad}) => {
+  let total = good+neutral+bad
+  if (total == 0) return (
+    <div>
+      <div>average {0}</div>
+      <div>positive {0} %</div>
+    </div>
+  )
+  else return(
+    <div>
+      <div>average {(good-bad)/total}</div>
+      <div>positive {good/total*100} %</div>
+    </div>
+  )
 }
 
 const App = () => {
@@ -33,8 +45,7 @@ const App = () => {
       <Display text={"neutral"} value={neutral}/>
       <Display text={"bad"} value={bad}/>
       <Display text={"all"} value={total}/>
-      <Display text={"average"} value={(good-bad)/total}/>
-      <Display text={"positive"} value={good/total*100}/>
+      <Statistics good={good} neutral={neutral} bad={bad}/>
     </div>
   )
 }
