@@ -4,7 +4,11 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button =({handleClick, text}) => <button onClick={handleClick}>{text}</button> 
 
-const Display = ({text, value}) => <div>{text} {value}</div>
+const Display = ({text, value}) => {
+  if (isNaN(value)) value = 0
+  if (text == "positive") return <div>{text} {value} %</div>
+  else return <div>{text} {value}</div>
+}
 
 const App = () => {
   // guarda los clics de cada botón en su propio estado
@@ -16,6 +20,7 @@ const App = () => {
     console.log('Now ', state, ' and increment to ', state+1)
     setState(state+1)
   }
+  let total = good+neutral+bad
 
   return (
     <div>
@@ -27,6 +32,9 @@ const App = () => {
       <Display text={"good"} value={good}/>
       <Display text={"neutral"} value={neutral}/>
       <Display text={"bad"} value={bad}/>
+      <Display text={"all"} value={total}/>
+      <Display text={"average"} value={(good-bad)/total}/>
+      <Display text={"positive"} value={good/total*100}/>
     </div>
   )
 }
