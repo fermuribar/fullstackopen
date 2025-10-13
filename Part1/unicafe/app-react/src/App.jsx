@@ -4,8 +4,7 @@ const Title = ({text}) => <h1>{text}</h1>
 
 const Button =({handleClick, text}) => <button onClick={handleClick}>{text}</button> 
 
-const StatisticLine = ({text, value}) => <div>{text} {value}</div>
-
+const StatisticLine = ({text, value}) => <tr><td>{text}</td><td>{value}</td></tr>
 
 const Statistics = ({good, neutral, bad}) => {
   let total = good+neutral+bad
@@ -13,14 +12,16 @@ const Statistics = ({good, neutral, bad}) => {
   let positive = (good/total)*100
   if (total == 0) return <div>No feedback given</div>
   else return(
-    <div>
-      <StatisticLine text={"good"} value={good}/>
-      <StatisticLine text={"neutral"} value={neutral}/>
-      <StatisticLine text={"bad"} value={bad}/>
-      <StatisticLine text={"all"} value={total}/>
-      <StatisticLine text={"average"} value={average}/>
-      <StatisticLine text={"positive"} value={positive + " %"}/>
-    </div>
+    <table>
+      <tbody>
+        <StatisticLine text={"good"} value={good}/>
+        <StatisticLine text={"neutral"} value={neutral}/>
+        <StatisticLine text={"bad"} value={bad}/>
+        <StatisticLine text={"all"} value={total}/>
+        <StatisticLine text={"average"} value={average}/>
+        <StatisticLine text={"positive"} value={positive + " %"}/>
+      </tbody>
+    </table>
   )
 }
 
