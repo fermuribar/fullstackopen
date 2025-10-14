@@ -3,7 +3,13 @@ import { useState } from 'react'
 const randomFloat0max = (max) => Math.random() * max 
 const randomInt0max = (max) => Math.floor(randomFloat0max(max))
 
-const Button =({handleClick, text}) => <button onClick={handleClick}>{text}</button> 
+const Button =({handleClick, text}) => <button onClick={handleClick}>{text}</button>
+
+const DisplayAnecdote = ({anecdotes, selected, arrayVotes}) => 
+  <div>
+    <div>{anecdotes[selected]}</div>
+    <div>has {arrayVotes[selected]} votes</div>
+  </div>
 
 const App = () => {
   const anecdotes = [
@@ -23,7 +29,6 @@ const App = () => {
   const handleRandomSelected = () => {
     let randomSelector = randomInt0max(anecdotes.length)
     while (randomSelector == selected) {
-      console.log("son iguales " + randomSelector)
       randomSelector = randomInt0max(anecdotes.length)
     }
     setSelected(randomSelector)
@@ -34,12 +39,19 @@ const App = () => {
     setVotes(copy)
   }
 
+  const indexMax = arrayVotes.reduce(
+    (maxIdx, current, idx, arr) => current > arr[maxIdx] ? idx : maxIdx
+    , 0
+    )
+
   return (
     <div>
-      <div>{anecdotes[selected]}</div>
-      <div>has {arrayVotes[selected]} votes</div>
+      <h1>Anecdote of the day</h1>
+      <DisplayAnecdote anecdotes={anecdotes} selected={selected} arrayVotes={arrayVotes}/>
       <Button handleClick={handleVote} text={"vote"}/>
       <Button handleClick={handleRandomSelected} text={"next anecdote"}/>
+      <h1>Anecdote with most votes</h1>
+      <DisplayAnecdote anecdotes={anecdotes} selected={indexMax} arrayVotes={arrayVotes}/>
     </div>
   )
 }
