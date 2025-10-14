@@ -17,13 +17,28 @@ const App = () => {
     'The only way to go fast, is to go well.'
   ]
 
-  const [selected, setSelected] = useState(0)
+  const [selected, setSelected] = useState(randomInt0max(anecdotes.length))
+  const [arrayVotes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
-  const handleRandomSelected = () => setSelected(randomInt0max(anecdotes.length))
+  const handleRandomSelected = () => {
+    let randomSelector = randomInt0max(anecdotes.length)
+    while (randomSelector == selected) {
+      console.log("son iguales " + randomSelector)
+      randomSelector = randomInt0max(anecdotes.length)
+    }
+    setSelected(randomSelector)
+  }
+  const handleVote = () => {
+    const copy = [...arrayVotes]
+    copy[selected] += 1
+    setVotes(copy)
+  }
 
   return (
     <div>
       <div>{anecdotes[selected]}</div>
+      <div>has {arrayVotes[selected]} votes</div>
+      <Button handleClick={handleVote} text={"vote"}/>
       <Button handleClick={handleRandomSelected} text={"next anecdote"}/>
     </div>
   )
