@@ -1,5 +1,9 @@
 import { useState } from 'react'
 
+import Filter from "./components/Filter"
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456',},
@@ -9,45 +13,22 @@ const App = () => {
   ]) 
 
   const [findName, setFindName] = useState('')
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
-
-  const eventChangeInput = (e, f) => f(e.target.value)
-  const eventAddPerson = (e) => {
-    e.preventDefault()
-    const newPerson = { 
-      name: newName,
-      number: newNumber
-    }
-    if (persons.some( person => person.name === newPerson.name)) alert(`${newName} is already added to phonebook`)
-    else setPersons(persons.concat(newPerson))
-    setNewName("")
-    setNewNumber("")
-  }
+  
+  const eventChangeInput = (ev, seter) => seter(ev.target.value)
 
   return (
-    <div >
+    <div>
       <h2>Phonebook</h2>
-      <div>filter shown with <input value = {findName} onChange={(e) => eventChangeInput(e, setFindName)}/></div>
-      <h2>add a new</h2>
-      <form onSubmit={eventAddPerson}>
-        <div>
-          name: <input value = {newName} onChange={(e) => eventChangeInput(e, setNewName)}/>
-        </div>
-        <div>
-          number: <input value = {newNumber} onChange={(e) => eventChangeInput(e, setNewNumber)}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-          {/* <div>debug: {newName}</div> */}
-        </div>
-      </form>
-      <h2>Numbers</h2>
-      {
-      persons
-      .filter( person => person.name.toLowerCase().includes(findName.toLowerCase()))
-      .map((person, idx) => <div key ={person.name}>{person.name} {person.number}</div>)
-      }
+
+      <Filter eventChangeInput={eventChangeInput} setFindName={setFindName} findName={findName} />
+
+      <h3>Add a new</h3>
+
+      <PersonForm eventChangeInput = {eventChangeInput} setPersons={setPersons} persons={persons}/>
+
+      <h3>Numbers</h3>
+
+      <Persons persons={persons} findName={findName} />
     </div>
   )
 }
