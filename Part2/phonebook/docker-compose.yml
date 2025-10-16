@@ -11,5 +11,5 @@ services:
     tty: true
     command: >
       sh -c "
-      npm run dev -- --host
+      npm install && npm run dev -- --host
       "
