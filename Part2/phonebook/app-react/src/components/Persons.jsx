@@ -13,7 +13,7 @@ const handleDeletePerson = (person, setPersons, persons) => {
   }
 }
 
-const Person = ({person}) => <>{person.name} {person.number}</>
+const Person = ({person}) => <>{person.name} {person.number} </>
   
 
 const Persons = ({persons, setPersons, findName}) => 

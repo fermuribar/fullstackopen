@@ -8,12 +8,11 @@ import Persons from './components/Persons'
 const App = () => {
   const [persons, setPersons] = useState([]) 
   useEffect(() => {
-    console.log('effect')
     personsServices
       .getAll()
       .then(response => {
-        console.log('promise fulfilled')
-        console.log(response)
+        //console.log('promise fulfilled')
+        //console.log(response)
         setPersons(response)
       })
       .catch(error => {
