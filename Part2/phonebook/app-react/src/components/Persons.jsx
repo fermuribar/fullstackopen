@@ -1,6 +1,9 @@
 import personsServices from '../services/APIpersons'
 
-const handleDeletePerson = (person, setPersons, persons) => {
+const Person = ({person}) => <>{person.name} {person.number} </>
+
+const Persons = ({persons, setPersons, findName}) => {
+  const handleDeletePerson = (person) => {
   if(window.confirm(`Delete ${person.name} ?`)) {
     personsServices
       .deletePerson(person.id)
@@ -12,17 +15,13 @@ const handleDeletePerson = (person, setPersons, persons) => {
     setPersons(persons.filter( p => p.id !== person.id))
   }
 }
-
-const Person = ({person}) => <>{person.name} {person.number} </>
-  
-
-const Persons = ({persons, setPersons, findName}) => 
-  persons
+  return persons
   .filter( person => person.name.toLowerCase().includes(findName.toLowerCase()))
   .map((person) => <div key ={person.name}>
     <Person  person={person}/>
-    <button onClick = {() => handleDeletePerson(person, setPersons, persons)}>Delete</button>
+    <button onClick = {() => handleDeletePerson(person)}>Delete</button>
     </div>
 )
+}
 
 export default Persons
