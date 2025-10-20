@@ -1,9 +1,9 @@
 import { useState } from "react"
+import personsServices from '../services/APIpersons'
 
 const PersonForm = ({eventChangeInput , setPersons, persons}) => {
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
-
     const eventAddPerson = (ev) => {
         ev.preventDefault()
         const newPerson = { 
@@ -11,7 +11,18 @@ const PersonForm = ({eventChangeInput , setPersons, persons}) => {
         number: newNumber
         }
         if (persons.some( person => person.name === newPerson.name)) alert(`${newName} is already added to phonebook`)
-        else setPersons(persons.concat(newPerson))
+        else {
+          personsServices
+          .addPerson(newPerson)
+          .then(returnedPerson => {
+            console.log(returnedPerson)
+            setPersons(persons.concat(returnedPerson))
+          })
+          .catch(error => {
+            console.error('Error adding person:', error)
+            alert('Failed to add person to server')
+          })
+        }
         setNewName("")
         setNewNumber("")
     }

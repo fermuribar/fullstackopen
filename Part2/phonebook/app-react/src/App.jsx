@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personsServices from './services/APIpersons'
 
 import Filter from "./components/Filter"
 import PersonForm from './components/PersonForm'
@@ -9,12 +9,16 @@ const App = () => {
   const [persons, setPersons] = useState([]) 
   useEffect(() => {
     console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
+    personsServices
+      .getAll()
       .then(response => {
         console.log('promise fulfilled')
         console.log(response)
-        setPersons(response.data)
+        setPersons(response)
+      })
+      .catch(error => {
+        console.error('Error fetching persons:', error)
+        alert('Failed to fetch persons from server')
       })
     }, [])
 
