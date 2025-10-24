@@ -1,7 +1,7 @@
 import { useState } from "react"
 import personsServices from '../services/APIpersons'
 
-const PersonForm = ({eventChangeInput , setPersons, persons}) => {
+const PersonForm = ({eventChangeInput , setPersons, persons, setMessage}) => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const eventAddPerson = (ev) => {
@@ -18,7 +18,13 @@ const PersonForm = ({eventChangeInput , setPersons, persons}) => {
         }
         personsServices
         .changePerson(personNewNumber.id, personNewNumber)
-        .then(returnedPerson => setPersons(persons.map( p => p.id !== personNewNumber.id ? p : returnedPerson)))
+        .then(returnedPerson => {
+          setPersons(persons.map( p => p.id !== personNewNumber.id ? p : returnedPerson))
+          setMessage(`Changed ${newName}'s number`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
+        })
         .catch(error => {
           console.error('Error updating person:', error)
           alert(`Failed to update ${newName}'s number on server`)
@@ -30,6 +36,10 @@ const PersonForm = ({eventChangeInput , setPersons, persons}) => {
       .then(returnedPerson => {
         //console.log(returnedPerson)
         setPersons(persons.concat(returnedPerson))
+        setMessage(`Added ${newName}`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
       .catch(error => {
         console.error('Error adding person:', error)

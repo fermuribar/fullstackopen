@@ -5,8 +5,29 @@ import Filter from "./components/Filter"
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 
+const AddPersonNotification = ({message}) => {
+  if (message === null) {
+    return null
+  }
+  const addPersonStyle = {
+    color: 'green',
+    background: 'lightgre',
+    fontSize: '20px',
+    borderStyle: 'solid',
+    borderRadius: '5px',
+    padding: '10px',
+    marginBottom: '10px'
+  }
+  return (
+    <div style={addPersonStyle}>
+      {message}
+    </div>
+  )
+}
+
 const App = () => {
   const [persons, setPersons] = useState([]) 
+  const [mensage, setMessage] = useState(null)
   useEffect(() => {
     personsServices
       .getAll()
@@ -29,11 +50,13 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
+      <AddPersonNotification message={mensage} />
+
       <Filter eventChangeInput={eventChangeInput} setFindName={setFindName} findName={findName} />
 
       <h3>Add a new</h3>
 
-      <PersonForm eventChangeInput = {eventChangeInput} setPersons={setPersons} persons={persons}/>
+      <PersonForm eventChangeInput = {eventChangeInput} setPersons={setPersons} persons={persons} setMessage={setMessage}/>
 
       <h3>Numbers</h3>
 
