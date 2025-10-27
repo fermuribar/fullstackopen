@@ -6,12 +6,12 @@ import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 
 
-const AddPersonNotification = ({message, notERROR}) => {
+const Notification = ({message, error}) => {
   if (message === null) {
     return null
   }
   const style = {
-    color: notERROR ? 'green' : 'red',
+    color: error ? 'red' : 'green',
     background: 'lightgre',
     fontSize: '20px',
     borderStyle: 'solid',
@@ -53,7 +53,7 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <AddPersonNotification message={mensage} notERROR={!error}/>
+      <Notification message={mensage} error={error}/>
 
       <Filter eventChangeInput={eventChangeInput} setFindName={setFindName} findName={findName} />
 
@@ -63,7 +63,7 @@ const App = () => {
 
       <h3>Numbers</h3>
 
-      <Persons persons={persons} setPersons={setPersons} findName={findName} />
+      <Persons persons={persons} setPersons={setPersons} findName={findName} setMessage={setMessage} setError={setError}/>
     </div>
   )
 }

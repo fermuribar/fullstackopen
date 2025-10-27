@@ -2,15 +2,19 @@ import personsServices from '../services/APIpersons'
 
 const Person = ({person}) => <>{person.name} {person.number} </>
 
-const Persons = ({persons, setPersons, findName}) => {
+const Persons = ({persons, setPersons, findName, setMessage, setError}) => {
   const handleDeletePerson = (person) => {
   if(window.confirm(`Delete ${person.name} ?`)) {
     personsServices
       .deletePerson(person.id)
       .catch(error => {
-        console.error('Error deleting person:', error)
-        alert('Failed to delete person from server')
-      }) 
+        setError(true)
+        setMessage(`Information of ${person.name} has already been removed from server`)
+        setTimeout(() => {
+          setError(false)
+          setMessage(null)
+        }, 5000)
+      })
     setPersons(persons.filter( p => p.id !== person.id))
   }
 }
