@@ -1,7 +1,7 @@
 import { useState } from "react"
 import personsServices from '../services/APIpersons'
 
-const PersonForm = ({eventChangeInput , setPersons, persons, setMessage}) => {
+const PersonForm = ({eventChangeInput , setPersons, persons, setMessage, setError}) => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const eventAddPerson = (ev) => {
@@ -10,7 +10,7 @@ const PersonForm = ({eventChangeInput , setPersons, persons, setMessage}) => {
       name: newName,
       number: newNumber
     }
-    if (persons.some( person => person.name === newPerson.name)){ 
+    if (persons.some( person => person.name === newPerson.name)){ // Name already exists
       if(window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)){ 
         const personNewNumber = {
           ...persons.find(p => p.name === newName),
@@ -26,15 +26,18 @@ const PersonForm = ({eventChangeInput , setPersons, persons, setMessage}) => {
           }, 5000)
         })
         .catch(error => {
-          console.error('Error updating person:', error)
-          alert(`Failed to update ${newName}'s number on server`)
+          setError(true)
+          setMessage(`Information of ${newName} has already been removed from server`)
+          setTimeout(() => {
+            setError(false)
+            setMessage(null)
+          }, 5000)
         })
       }
-    }else {
+    }else { // New Name
       personsServices
       .addPerson(newPerson)
       .then(returnedPerson => {
-        //console.log(returnedPerson)
         setPersons(persons.concat(returnedPerson))
         setMessage(`Added ${newName}`)
         setTimeout(() => {

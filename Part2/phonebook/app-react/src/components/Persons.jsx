@@ -7,7 +7,6 @@ const Persons = ({persons, setPersons, findName}) => {
   if(window.confirm(`Delete ${person.name} ?`)) {
     personsServices
       .deletePerson(person.id)
-      .then(() => console.log(`Person with id ${person.id} deleted successfully`))
       .catch(error => {
         console.error('Error deleting person:', error)
         alert('Failed to delete person from server')

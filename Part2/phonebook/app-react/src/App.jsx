@@ -5,12 +5,13 @@ import Filter from "./components/Filter"
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
 
-const AddPersonNotification = ({message}) => {
+
+const AddPersonNotification = ({message, notERROR}) => {
   if (message === null) {
     return null
   }
-  const addPersonStyle = {
-    color: 'green',
+  const style = {
+    color: notERROR ? 'green' : 'red',
     background: 'lightgre',
     fontSize: '20px',
     borderStyle: 'solid',
@@ -19,7 +20,7 @@ const AddPersonNotification = ({message}) => {
     marginBottom: '10px'
   }
   return (
-    <div style={addPersonStyle}>
+    <div style={style}>
       {message}
     </div>
   )
@@ -28,6 +29,8 @@ const AddPersonNotification = ({message}) => {
 const App = () => {
   const [persons, setPersons] = useState([]) 
   const [mensage, setMessage] = useState(null)
+  const [error, setError] = useState(false)
+
   useEffect(() => {
     personsServices
       .getAll()
@@ -50,13 +53,13 @@ const App = () => {
     <div>
       <h2>Phonebook</h2>
 
-      <AddPersonNotification message={mensage} />
+      <AddPersonNotification message={mensage} notERROR={!error}/>
 
       <Filter eventChangeInput={eventChangeInput} setFindName={setFindName} findName={findName} />
 
       <h3>Add a new</h3>
 
-      <PersonForm eventChangeInput = {eventChangeInput} setPersons={setPersons} persons={persons} setMessage={setMessage}/>
+      <PersonForm eventChangeInput = {eventChangeInput} setPersons={setPersons} persons={persons} setMessage={setMessage} setError={setError}/>
 
       <h3>Numbers</h3>
 
