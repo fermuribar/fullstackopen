@@ -30,6 +30,11 @@ const App = () => {
   const [persons, setPersons] = useState([]) 
   const [mensage, setMessage] = useState(null)
   const [error, setError] = useState(false)
+  const [reload, setReload] = useState(false)
+
+  const reloadPersons = () => {
+    setReload(!reload)
+  }
 
   useEffect(() => {
     personsServices
@@ -43,7 +48,9 @@ const App = () => {
         console.error('Error fetching persons:', error)
         alert('Failed to fetch persons from server')
       })
-    }, [])
+      setTimeout(() => reloadPersons(), 3000)
+      console.log('recarga de API')
+    }, [reload])
 
   const [findName, setFindName] = useState('')
   
